@@ -15,7 +15,11 @@ system("stty cols 24 rows 24");
 $snake = new Snake([[3, 1], [2, 1], [1, 1]], [1, 0]);
 $snake->render();
 $apple = new Apple(24, 24);
-$apple->updateCoords($snake->getPositions());
+try {
+    $apple->updateCoords($snake->getPositions());
+} catch (Exception $e) {
+    echo "Не существующая ситуация";
+}
 $apple->setCoords([5,1]);
 $apple->render();
 

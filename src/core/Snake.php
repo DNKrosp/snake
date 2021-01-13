@@ -15,23 +15,25 @@ class Snake
         "DOWN"=>[0, 1],
     ];
 
-    private $clear;
-    public $isEat = false;
+    /**
+     * @var resource
+     */
+    private $stdin;
+    private array $clear;
+    public bool $isEat = false;
 
-    public function __construct($positions, $direction)
+
+    public function __construct(private $positions, private $direction)
     {
-        $this->positions = $positions;
-        $this->direction = $direction; //[0, 1], [1, 0], [0, -1], [-1, 0]
-
         $this->stdin = fopen('php://stdin', 'r');
         stream_set_blocking($this->stdin, 0);
     }
 
     /**
-     * @return mixed
+     * @return bool
      * @throws Exception
      */
-    public function move()
+    public function move(): bool
     {
         $this->direction = $this->getDirectionFromChar();
         $head = $lastPosition = $this->positions[0];
@@ -101,7 +103,7 @@ class Snake
         echo chr(27)."[$y;$x"."f";
     }
 
-    private function getDirectionFromChar()
+    private function getDirectionFromChar(): array
     {
         $command = strtolower(trim(stream_get_contents($this->stdin)));
 

@@ -6,15 +6,16 @@ use Exception;
 
 class Apple
 {
-    private $position;
+    private array $position;
 
-    public function __construct($mapHeight, $mapWidth)
-    {
-        $this->mapHeight = $mapHeight;
-        $this->mapWidth = $mapWidth;
-    }
+    public function __construct(private $mapHeight, private $mapWidth) {}
 
-    public function updateCoords($overPositions)
+    /**
+     * @param $overPositions
+     * @return bool
+     * @throws Exception
+     */
+    public function updateCoords($overPositions): bool
     {
         $newAppleNotIn = false;
         $newAppleCord = [1, 1];
@@ -32,7 +33,7 @@ class Apple
         return true;
     }
 
-    public function getPosition()
+    public function getPosition(): array
     {
         return $this->position;
     }
